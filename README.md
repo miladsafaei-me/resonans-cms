@@ -1,8 +1,8 @@
 # Resonans CMS
 
-A reusable Django content management system for building content-driven websites.
+An AI-friendly Django content management system for building content-driven websites.
 
-Ships as a pip-installable package with the features most blogs and publications need:
+Bring your own API key and the CMS turns AI-authored Markdown into sanitized, SEO-ready HTML and generates featured and inline images on demand. Ships as a pip-installable package with the features most blogs and publications need:
 
 - **Blog and News** — Markdown-authored posts with categories, tags, authors, featured images, and threaded comments
 - **Taxonomy** — shared `Tag` model and scoped `Category` (blog vs. news)

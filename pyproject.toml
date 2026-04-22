@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "resonans-cms"
 version = "0.1.0"
-description = "A reusable Django content management system with blog, news, tags, comments, newsletter, AI image generation, and internal link building."
+description = "An AI-friendly Django CMS: ingest AI-authored Markdown as sanitized HTML, generate images from a single API key, plus blog, news, tags, comments, newsletter, and internal link building."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.10"
