@@ -1,0 +1,115 @@
+{% extends "resonans_cms/base.html" %}
+{% load static %}
+
+{% block title %}Resonans CMS — AI-friendly Django CMS{% endblock %}
+{% block meta_description %}Resonans CMS is a reusable, AI-friendly Django content management system for blogs, news, authors, tags, comments, and internal link building.{% endblock %}
+
+{% block content %}
+<section class="border-b border-gray-200 bg-white">
+    <div class="max-w-5xl mx-auto px-4 py-16 sm:py-20 grid gap-10 md:grid-cols-2 md:items-center">
+        <div>
+            <span class="inline-block text-xs font-semibold tracking-wider uppercase text-[#CC0025]">Resonans CMS</span>
+            <h1 class="mt-3 text-4xl sm:text-5xl font-semibold text-gray-900 leading-tight">
+                An AI-friendly Django CMS, ready to drop in.
+            </h1>
+            <p class="mt-5 text-lg text-gray-600">
+                Blog, news, authors, tags, comments, newsletter, and internal link building —
+                packaged as a single <code class="px-1.5 py-0.5 rounded bg-gray-100 text-sm">pip install</code>
+                and wired into your Django project with one line of configuration.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <a href="{% url 'blog:post_list' %}"
+                   class="inline-flex items-center px-5 py-2.5 rounded bg-[#CC0025] text-white font-medium hover:bg-[#a8001e] transition">
+                    Read the blog
+                </a>
+                <a href="{% url 'news:post_list' %}"
+                   class="inline-flex items-center px-5 py-2.5 rounded border border-gray-300 text-gray-800 font-medium hover:border-gray-400 hover:bg-gray-50 transition">
+                    Latest news
+                </a>
+            </div>
+        </div>
+        <div class="flex justify-center md:justify-end">
+            <img src="{% static 'resonans_cms/img/logo-icon.svg' %}"
+                 alt=""
+                 class="h-40 w-40 sm:h-56 sm:w-56 opacity-90">
+        </div>
+    </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-4 py-12">
+    <div class="grid gap-6 sm:grid-cols-3">
+        <div class="p-5 bg-white border border-gray-200 rounded-lg">
+            <h3 class="font-semibold text-gray-900">Markdown + sanitized HTML</h3>
+            <p class="mt-2 text-sm text-gray-600">
+                Write posts in Markdown; the pipeline renders and sanitizes them on save.
+            </p>
+        </div>
+        <div class="p-5 bg-white border border-gray-200 rounded-lg">
+            <h3 class="font-semibold text-gray-900">Internal link building</h3>
+            <p class="mt-2 text-sm text-gray-600">
+                Map keywords to user intents and let the auto-linker weave them through your content.
+            </p>
+        </div>
+        <div class="p-5 bg-white border border-gray-200 rounded-lg">
+            <h3 class="font-semibold text-gray-900">Optional AI images</h3>
+            <p class="mt-2 text-sm text-gray-600">
+                Gemini-powered hero and inline images when you want them; the CMS never requires a key.
+            </p>
+        </div>
+    </div>
+</section>
+
+{% if latest_posts %}
+<section class="max-w-5xl mx-auto px-4 py-8">
+    <div class="flex items-end justify-between mb-6">
+        <h2 class="text-2xl font-semibold text-gray-900">Latest from the blog</h2>
+        <a href="{% url 'blog:post_list' %}" class="text-sm text-[#CC0025] hover:underline">View all &rarr;</a>
+    </div>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {% for post in latest_posts %}
+            <article class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-md transition">
+                {% if post.featured_image_url %}
+                    <img src="{{ post.featured_image_url }}" alt="{{ post.title }}" class="w-full h-40 object-cover">
+                {% endif %}
+                <div class="p-4">
+                    <h3 class="text-lg font-semibold">
+                        <a href="{% url 'blog:post_detail' slug=post.slug %}" class="text-gray-900 hover:text-[#CC0025]">
+                            {{ post.title }}
+                        </a>
+                    </h3>
+                    <p class="mt-2 text-sm text-gray-600">{{ post.excerpt|truncatewords:18 }}</p>
+                    <div class="mt-3 text-xs text-gray-500 flex items-center justify-between">
+                        <span>{{ post.author.name }}</span>
+                        {% if post.published_at %}<time>{{ post.published_at|date:"M j, Y" }}</time>{% endif %}
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% if latest_news %}
+<section class="max-w-5xl mx-auto px-4 py-8 pb-16">
+    <div class="flex items-end justify-between mb-6">
+        <h2 class="text-2xl font-semibold text-gray-900">Latest news</h2>
+        <a href="{% url 'news:post_list' %}" class="text-sm text-[#CC0025] hover:underline">View all &rarr;</a>
+    </div>
+    <ul class="divide-y divide-gray-200 bg-white rounded-lg border border-gray-200">
+        {% for post in latest_news %}
+            <li class="p-4 hover:bg-gray-50">
+                <a href="{% url 'news:post_detail' slug=post.slug %}" class="flex items-center justify-between gap-4">
+                    <div>
+                        <h3 class="font-medium text-gray-900">{{ post.title }}</h3>
+                        <p class="mt-1 text-sm text-gray-600">{{ post.excerpt|truncatewords:20 }}</p>
+                    </div>
+                    {% if post.published_at %}
+                        <time class="text-xs text-gray-500 shrink-0">{{ post.published_at|date:"M j, Y" }}</time>
+                    {% endif %}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
+{% endblock %}

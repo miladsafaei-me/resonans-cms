@@ -1,0 +1,83 @@
+{% extends "resonans_cms/base.html" %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% block title %}{% trans "Create account" %} · Resonans CMS{% endblock %}
+
+{% block content %}
+<section class="max-w-md mx-auto px-4 py-12">
+    <div class="bg-white border border-gray-200 rounded-lg shadow-sm p-8">
+        <div class="text-center mb-6">
+            <h1 class="text-2xl font-semibold text-gray-900">{% trans "Create your account" %}</h1>
+            <p class="mt-2 text-sm text-gray-600">
+                {% trans "Already have an account?" %}
+                <a href="{% url 'account_login' %}" class="text-[#CC0025] hover:underline">{% trans "Sign in" %}</a>
+            </p>
+        </div>
+
+        {% if form.non_field_errors %}
+            <div class="mb-4 rounded border-l-4 border-red-500 bg-red-50 px-3 py-2 text-sm text-red-800">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'account_signup' %}" class="space-y-4">
+            {% csrf_token %}
+            {% for field in form.visible_fields %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700 mb-1">
+                        {{ field.label }}{% if field.field.required %} <span class="text-[#CC0025]">*</span>{% endif %}
+                    </label>
+                    {% if field.field.widget.input_type == "checkbox" %}
+                        <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                            <input type="checkbox"
+                                   name="{{ field.name }}"
+                                   id="{{ field.id_for_label }}"
+                                   {% if field.value %}checked{% endif %}
+                                   class="rounded border-gray-300 text-[#CC0025] focus:ring-[#CC0025]">
+                            <span>{{ field.label }}</span>
+                        </label>
+                    {% else %}
+                        <input type="{{ field.field.widget.input_type|default:'text' }}"
+                               name="{{ field.name }}"
+                               id="{{ field.id_for_label }}"
+                               {% if field.value %}value="{{ field.value }}"{% endif %}
+                               {% if field.field.required %}required{% endif %}
+                               autocomplete="{{ field.name }}"
+                               class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#CC0025] focus:border-transparent">
+                    {% endif %}
+                    {% if field.help_text %}
+                        <p class="mt-1 text-xs text-gray-500">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <p class="mt-1 text-xs text-red-700">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            {{ redirect_field }}
+            <button type="submit"
+                    class="w-full px-4 py-2.5 bg-[#CC0025] text-white font-medium rounded hover:bg-[#a8001e] transition">
+                {% trans "Create account" %}
+            </button>
+        </form>
+
+        {% get_providers as socialaccount_providers %}
+        {% if socialaccount_providers %}
+            <div class="relative my-6">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-200"></div></div>
+                <div class="relative flex justify-center">
+                    <span class="bg-white px-3 text-xs uppercase tracking-wider text-gray-500">{% trans "or" %}</span>
+                </div>
+            </div>
+            <div class="space-y-2">
+                {% for provider in socialaccount_providers %}
+                    <a href="{% provider_login_url provider.id process='signup' %}"
+                       class="flex items-center justify-center gap-2 w-full px-4 py-2.5 border border-gray-300 rounded text-gray-800 font-medium hover:bg-gray-50 transition">
+                        {% trans "Continue with" %} {{ provider.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
