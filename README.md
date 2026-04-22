@@ -88,6 +88,16 @@ pip install resonans-cms
 
 Visit `http://localhost:8000/cms/` to see the admin dashboard and `/blog/` for the public site.
 
+## Demo content
+
+Want to see the CMS populated? Run the bundled seed command after migrating:
+
+```bash
+python manage.py seed_demo --reset
+```
+
+That creates two authors, three blog posts, two news articles, a newsletter list, and an internal-linking intent — the same content shown in the screenshots above.
+
 ## Optional features
 
 - **AI image generation**: `pip install resonans-cms[ai]` and set `GEMINI_API_KEY` in your environment
@@ -102,6 +112,7 @@ python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev,ai,celery]"
 cd demo
 python manage.py migrate
+python manage.py seed_demo
 python manage.py createsuperuser
 python manage.py runserver
 ```
