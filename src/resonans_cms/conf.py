@@ -121,6 +121,32 @@ def apply_cms_defaults(namespace: dict) -> None:
         {
             "SITE_TITLE": os.environ.get("CMS_SITE_TITLE", "Resonans CMS"),
             "SITE_HEADER": os.environ.get("CMS_SITE_HEADER", "Resonans"),
+            "SITE_ICON": {
+                "light": lambda request: "/static/resonans_cms/img/logo-icon.svg",
+                "dark": lambda request: "/static/resonans_cms/img/logo-icon.svg",
+            },
+            "SITE_FAVICONS": [
+                {
+                    "rel": "icon",
+                    "type": "image/svg+xml",
+                    "href": lambda request: "/static/resonans_cms/img/favicon.svg",
+                },
+            ],
+            "COLORS": {
+                "primary": {
+                    "50": "254 242 244",
+                    "100": "253 226 229",
+                    "200": "251 199 206",
+                    "300": "247 160 173",
+                    "400": "240 107 129",
+                    "500": "228 57 87",
+                    "600": "216 5 42",
+                    "700": "181 16 40",
+                    "800": "152 20 42",
+                    "900": "131 21 42",
+                    "950": "73 8 17",
+                },
+            },
             "THEME": "light",
         },
     )

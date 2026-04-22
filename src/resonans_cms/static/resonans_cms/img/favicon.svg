@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" role="img" aria-label="Resonans CMS">
+  <rect width="900" height="900" fill="#D8052A"/>
+
+  <path d="M 130 320 v 260 a 130 130 0 0 0 0 -260 z" fill="#ffffff"/>
+  <path d="M 285 240 v 430 a 215 215 0 0 0 0 -430 z" fill="#ffffff"/>
+  <path d="M 465 130 v 640 a 320 320 0 0 0 0 -640 z" fill="#ffffff"/>
+</svg>

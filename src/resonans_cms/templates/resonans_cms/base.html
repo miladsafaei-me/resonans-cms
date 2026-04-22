@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Resonans CMS{% endblock %}</title>
     <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <link rel="icon" type="image/svg+xml" href="{% static 'resonans_cms/img/favicon.svg' %}">
+    <link rel="alternate icon" type="image/png" href="{% static 'resonans_cms/img/favicon.png' %}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static 'resonans_cms/css/base.css' %}">
     {% block extra_head %}{% endblock %}
@@ -12,8 +14,8 @@
 <body class="bg-gray-50 text-gray-900 antialiased min-h-screen flex flex-col">
     <header class="border-b border-gray-200 bg-white">
         <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-            <a href="/" class="text-xl font-semibold text-gray-900 hover:text-blue-600">
-                {% block site_title %}Resonans{% endblock %}
+            <a href="/" class="flex items-center" aria-label="{% block site_title %}Resonans CMS{% endblock %}">
+                <img src="{% static 'resonans_cms/img/logo-wordmark.svg' %}" alt="Resonans CMS" class="h-8 w-auto">
             </a>
             <nav class="flex items-center gap-6 text-sm">
                 <a href="{% url 'blog:post_list' %}" class="text-gray-700 hover:text-blue-600">Blog</a>
@@ -52,7 +54,10 @@
 
     <footer class="border-t border-gray-200 bg-white mt-12">
         <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-600 flex flex-wrap items-center justify-between gap-3">
-            <span>&copy; {% now "Y" %} {% block site_footer_name %}Resonans CMS{% endblock %}</span>
+            <span class="flex items-center gap-2">
+                <img src="{% static 'resonans_cms/img/favicon.svg' %}" alt="" class="h-5 w-5 rounded-sm">
+                <span>&copy; {% now "Y" %} {% block site_footer_name %}Resonans CMS{% endblock %}</span>
+            </span>
             <span>Built with <a href="https://github.com/miladsafaei-me/resonans-cms" class="text-blue-600 hover:underline">Resonans CMS</a></span>
         </div>
     </footer>
