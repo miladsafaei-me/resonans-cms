@@ -1,0 +1,37 @@
+{% extends "resonans_cms/news/post_list.html" %}
+
+{% block title %}#{{ tag.name }} — News{% endblock %}
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-4 py-10">
+    <header class="mb-8">
+        <p class="text-sm text-gray-500 uppercase tracking-wider">News tag</p>
+        <h1 class="text-3xl font-semibold text-gray-900 mt-1">#{{ tag.name }}</h1>
+    </header>
+
+    {% if posts %}
+        <div class="divide-y divide-gray-200">
+            {% for post in posts %}
+                <article class="py-5 flex gap-4">
+                    {% if post.featured_image_url %}
+                        <img src="{{ post.featured_image_url }}" alt="{{ post.title }}"
+                             class="w-32 h-24 object-cover rounded flex-shrink-0">
+                    {% endif %}
+                    <div class="flex-1">
+                        <h2 class="text-lg font-semibold">
+                            <a href="{% url 'news:post_detail' slug=post.slug %}" class="hover:text-blue-600">
+                                {{ post.title }}
+                            </a>
+                        </h2>
+                        <p class="mt-1 text-sm text-gray-600">{{ post.excerpt|truncatewords:25 }}</p>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-gray-600">No news tagged #{{ tag.name }} yet.</p>
+    {% endif %}
+
+    {% include "resonans_cms/partials/pagination.html" %}
+</section>
+{% endblock %}

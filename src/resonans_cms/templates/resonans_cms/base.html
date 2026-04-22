@@ -1,0 +1,60 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Resonans CMS{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{% endblock %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'resonans_cms/css/base.css' %}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased min-h-screen flex flex-col">
+    <header class="border-b border-gray-200 bg-white">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" class="text-xl font-semibold text-gray-900 hover:text-blue-600">
+                {% block site_title %}Resonans{% endblock %}
+            </a>
+            <nav class="flex items-center gap-6 text-sm">
+                <a href="{% url 'blog:post_list' %}" class="text-gray-700 hover:text-blue-600">Blog</a>
+                <a href="{% url 'news:post_list' %}" class="text-gray-700 hover:text-blue-600">News</a>
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <a href="{% url 'cms_admin:dashboard' %}" class="text-gray-700 hover:text-blue-600">Admin</a>
+                    {% endif %}
+                    <form method="post" action="{% url 'account_logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" class="text-gray-700 hover:text-blue-600">Logout</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'account_login' %}" class="text-gray-700 hover:text-blue-600">Login</a>
+                    <a href="{% url 'account_signup' %}" class="px-3 py-1.5 bg-blue-600 text-white rounded hover:bg-blue-700">Sign up</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="flex-1">
+        {% if messages %}
+            <div class="max-w-3xl mx-auto px-4 pt-4 space-y-2">
+                {% for message in messages %}
+                    <div class="rounded border-l-4 px-4 py-2 text-sm
+                        {% if message.tags == 'error' %}border-red-500 bg-red-50 text-red-800
+                        {% elif message.tags == 'success' %}border-green-500 bg-green-50 text-green-800
+                        {% else %}border-blue-500 bg-blue-50 text-blue-800{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-gray-200 bg-white mt-12">
+        <div class="max-w-5xl mx-auto px-4 py-6 text-sm text-gray-600 flex flex-wrap items-center justify-between gap-3">
+            <span>&copy; {% now "Y" %} {% block site_footer_name %}Resonans CMS{% endblock %}</span>
+            <span>Built with <a href="https://github.com/miladsafaei-me/resonans-cms" class="text-blue-600 hover:underline">Resonans CMS</a></span>
+        </div>
+    </footer>
+</body>
+</html>

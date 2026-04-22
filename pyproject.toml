@@ -1,0 +1,88 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "resonans-cms"
+version = "0.1.0"
+description = "A reusable Django content management system with blog, news, tags, comments, newsletter, AI image generation, and internal link building."
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Milad Safaei", email = "miladsafaei.me@gmail.com" },
+]
+keywords = ["django", "cms", "blog", "news", "tailwind", "ai", "gemini"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 5.0",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+]
+dependencies = [
+    "Django>=5.0,<6",
+    "django-allauth>=65.0",
+    "django-unfold>=0.39.0",
+    "beautifulsoup4>=4.12.0",
+    "Pillow>=10.0",
+    "markdown2>=2.3",
+    "markdownify>=0.14.0",
+    "nh3>=0.2.14",
+    "PyJWT>=2.0",
+    "cryptography>=42.0",
+    "requests>=2.28",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+ai = [
+    "google-generativeai>=0.8.0",
+]
+celery = [
+    "celery[redis]>=5.3",
+    "redis>=5.0",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-django>=4.8",
+    "ruff>=0.6",
+    "build>=1.0",
+    "twine>=5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/miladsafaei-me/resonans-cms"
+Repository = "https://github.com/miladsafaei-me/resonans-cms"
+Issues = "https://github.com/miladsafaei-me/resonans-cms/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/resonans_cms"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "src/resonans_cms",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "demo_project.settings"
+python_files = ["test_*.py", "*_test.py"]
+pythonpath = [".", "src", "demo"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP"]
