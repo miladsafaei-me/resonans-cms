@@ -12,6 +12,28 @@ Bring your own API key and the CMS turns AI-authored Markdown into sanitized, SE
 - **User management** — custom User model with email login, Google OAuth via `django-allauth`, and admin role/permission management
 - **Admin UI** — polished CMS dashboard built on top of [django-unfold](https://github.com/unfoldadmin/django-unfold)
 
+## Screenshots
+
+### Public pages
+
+| Blog list | Blog post |
+|---|---|
+| ![Blog list](docs/screenshots/01-blog-list.png) | ![Blog post detail](docs/screenshots/02-blog-detail.png) |
+
+| News list | Topic page |
+|---|---|
+| ![News list](docs/screenshots/03-news-list.png) | ![Topic list](docs/screenshots/04-topic-list.png) |
+
+### Admin and CMS dashboard
+
+| Django admin (Unfold) | CMS dashboard |
+|---|---|
+| ![Unfold admin home](docs/screenshots/05-admin-home.png) | ![CMS dashboard](docs/screenshots/08-cms-dashboard.png) |
+
+| Post list | Newsletter subscribers |
+|---|---|
+| ![Admin post list](docs/screenshots/06-admin-post-list.png) | ![Admin newsletter](docs/screenshots/07-admin-newsletter.png) |
+
 ## Installation
 
 ```bash

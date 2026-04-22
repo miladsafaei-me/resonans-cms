@@ -64,12 +64,12 @@ def prepare_content_for_storage(raw: str) -> str:
     raw = (raw or "").strip()
     if not raw:
         return ""
+    # Markdown wins when its syntax is present; stray `<` inside fenced code
+    # blocks must not flip us to the HTML branch.
+    if _looks_like_markdown(raw):
+        return markdown_to_html(raw)
     if "<" not in raw:
         return markdown_to_html(raw)
-    soup = BeautifulSoup(raw, "html.parser")
-    if _looks_like_markdown(raw) and _only_simple_containers(soup):
-        text = soup.get_text("\n\n").strip()
-        return markdown_to_html(text or raw)
     return sanitize_html(raw)
 
 
