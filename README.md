@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="src/resonans_cms/static/resonans_cms/img/logo-wordmark.svg" alt="Resonans CMS" width="560">
-</p>
-
 # Resonans CMS
 
 An AI-friendly Django content management system for building content-driven websites.
